@@ -21,9 +21,9 @@ BOARD_KERNEL_BASE := 0x80200000
 BOARD_KERNEL_PAGESIZE := 2048
 #BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x82200000
 
-TARGET_PREBUILT_KERNEL := device/lge/ms910/kernel
+TARGET_PREBUILT_KERNEL := device/lge/fx3/kernel
 
-TARGET_KERNEL_CONFIG := fx3_mpcs_tmo_defconfig ## fx3_mpcs_defconfig
+#TARGET_KERNEL_CONFIG := fx3_mpcs_tmo_defconfig ## fx3_mpcs_defconfig
 TARGET_KERNEL_CUSTOM_TOOLCHAIN := arm-eabi-4.4.3
 
 BOARD_BOOTIMAGE_PARTITION_SIZE := 50331648
