@@ -13,7 +13,7 @@
 /devices/platform/msm_sdcc.3/mmc_host               /external_sd    auto    default		voldmanaged=sdcard:auto
 
 ## USB Storage
-/devices/platform/msm_hsusb_host/usb                /storage/usbdisk0       auto        default		voldmanaged=sda:auto
+/devices/platform/msm_hsusb_host/usb                /storage/usbdisk0       auto         default		voldmanaged=sda:auto
 
 
 
