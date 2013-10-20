@@ -5,7 +5,7 @@ TARGET_GLOBAL_CFLAGS += -mfpu=neon -mfloat-abi=softfp
 TARGET_GLOBAL_CPPFLAGS += -mfpu=neon -mfloat-abi=softfp
 
 # inherit from the proprietary version
--include vendor/lge/fx3/BoardConfigVendor.mk
+-include vendor/lge/fx3mt/BoardConfigVendor.mk
 
 TARGET_ARCH := arm
 TARGET_NO_BOOTLOADER := true
@@ -17,7 +17,6 @@ TARGET_CPU_SMP := true
 TARGET_ARCH_VARIANT := armv7-a-neon
 ARCH_ARM_HAVE_TLS_REGISTER := true
 
-TARGET_BOOTLOADER_BOARD_NAME := fx3mt
 TARGET_BOOTLOADER_NAME := fx3
 
 TARGET_PRODUCT := fx3
@@ -30,6 +29,7 @@ BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x02000000
 TARGET_PREBUILT_KERNEL := device/lge/fx3mt/kernel
 
 TARGET_KERNEL_CONFIG := fx3_mpcs_defconfig
+TARGET_KERNEL_SOURCE := kernel/lge/fx3
 TARGET_KERNEL_CUSTOM_TOOLCHAIN := arm-eabi-4.4.3
 
 # Linaro Optimization
