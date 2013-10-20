@@ -10,7 +10,7 @@
 /dev/block/platform/msm_sdcc.1/by-name/recovery     /recovery       emmc    defaults                                                        defaults
 
 ## External SD
-/devices/platform/msm_sdcc.2/mmc_host/mmc2		    /external_sd    auto	default		voldmanaged=sdcard:auto
+/devices/platform/msm_sdcc.3/mmc_host	            /external_sd    auto	default		voldmanaged=sdcard:auto
 
 ## USB Storage
 /devices/platform/msm_hsusb_host/usb			    /storage/usbdisk0		auto	default		voldmanaged=sda:auto
