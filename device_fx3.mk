@@ -14,10 +14,6 @@ else
 	LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
 endif
 
-# Recovery
-PRODUCT_COPY_FILES += \
-	$(LOCAL_PATH)/recovery/fstab.fx3:recovery/root/fstab.fx3
-
 $(call inherit-product, build/target/product/full.mk)
 
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
@@ -25,3 +21,7 @@ PRODUCT_NAME := full_fx3
 PRODUCT_DEVICE := fx3
 
 $(call inherit-product, hardware/qcom/msm8960/msm8960.mk)
+
+# Recovery
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/recovery/postrecoveryboot.sh:recovery/root/sbin/postrecoveryboot.sh
