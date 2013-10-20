@@ -9,6 +9,6 @@ jmztaylor has a repo for the Virgin Mobile variant @ https://github.com/jmztaylo
 
 Thanks to
 ---------
-jmztaylor - for directing me to Dees-Troy's modified unpackbootimg which gives us the correct ramdisk-offsets.
+jmztaylor - for directing me to Dees-Troy's modified unpackbootimg which gives us the correct ramdisk-offsets that play nicely with Loki.
 
 Dess-Troy - for his modified unpackbootimg: https://github.com/Dees-Troy/unpackbootimg
