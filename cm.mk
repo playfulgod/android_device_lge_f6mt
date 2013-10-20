@@ -14,5 +14,5 @@ $(call inherit-product, device/lge/fx3/device_fx3.mk)
 PRODUCT_DEVICE := fx3
 PRODUCT_NAME := cm_fx3
 PRODUCT_BRAND := lge
-PRODUCT_MODEL := fx3
-PRODUCT_MANUFACTURER := lge
+PRODUCT_MODEL := LG-MS659
+PRODUCT_MANUFACTURER := LGE

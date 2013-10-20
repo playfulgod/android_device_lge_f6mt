@@ -3,7 +3,7 @@ Work in Progress
 
 Currently only builds for Clockworkmod Recovery
 
-My tree is specifically for the MS659 from MetroPCS, but should work for the other variants as well, esp with a few minor edits.
+My tree is specifically for the MS659 from MetroPCS, but should work for the other variants as well, esp with a few minor edits and correct kernel/src/defconfig (dont know if they are cross compatible yet).
 
 PeterCassetta has a repo for the T-Mobile variant @ https://github.com/PeterCassetta/android_device_lge_fx3
 
