@@ -14,3 +14,5 @@ Thanks to
 jmztaylor - for directing me to Dees-Troy's modified unpackbootimg which gives us the correct ramdisk-offsets that play nicely with Loki.
 
 Dess-Troy - for his modified unpackbootimg: https://github.com/Dees-Troy/unpackbootimg
+
+lonestar - for testing
