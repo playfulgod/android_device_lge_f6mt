@@ -15,4 +15,6 @@ jmztaylor - for directing me to Dees-Troy's modified unpackbootimg which gives u
 
 Dess-Troy - for his modified unpackbootimg: https://github.com/Dees-Troy/unpackbootimg
 
+PeterCassetta - for finding/figuring out mounting of external_sd in recovery
+
 lonestar - for testing
