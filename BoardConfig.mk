@@ -5,7 +5,7 @@ TARGET_GLOBAL_CFLAGS += -mfpu=neon -mfloat-abi=softfp
 TARGET_GLOBAL_CPPFLAGS += -mfpu=neon -mfloat-abi=softfp
 
 # inherit from the proprietary version
--include vendor/lge/fx3mt/BoardConfigVendor.mk
+-include vendor/lge/f6mt/BoardConfigVendor.mk
 
 TARGET_ARCH := arm
 TARGET_NO_BOOTLOADER := true
@@ -17,18 +17,18 @@ TARGET_CPU_SMP := true
 TARGET_ARCH_VARIANT := armv7-a-neon
 ARCH_ARM_HAVE_TLS_REGISTER := true
 
-TARGET_BOOTLOADER_NAME := fx3
+TARGET_BOOTLOADER_NAME := f6
 
-TARGET_PRODUCT := fx3
+TARGET_PRODUCT := f6
 
-BOARD_KERNEL_CMDLINE := androidboot.hardware=fx3mt user_debug=31 vmalloc=308M
-BOARD_KERNEL_BASE := 0x80200000
+BOARD_KERNEL_CMDLINE := androidboot.hardware=f6mt user_debug=31 vmalloc=308M
+BOARD_KERNEL_BASE := 0x80208000
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x02000000
 
-TARGET_PREBUILT_KERNEL := device/lge/fx3mt/kernel
+TARGET_PREBUILT_KERNEL := device/lge/f6mt/kernel
 
-TARGET_KERNEL_CONFIG := fx3_mpcs_defconfig
+TARGET_KERNEL_CONFIG := f6mt_mpcs_defconfig
 TARGET_KERNEL_SOURCE := kernel/lge/fx3
 
 # Linaro Optimization
@@ -54,7 +54,7 @@ BOARD_FLASH_BLOCK_SIZE := 131072
 BOARD_VOLD_MAX_PARTITIONS := 97
 
 # Recovery
-TARGET_RECOVERY_FSTAB := device/lge/fx3mt/recovery/fstab.fx3mt
+TARGET_RECOVERY_FSTAB := device/lge/f6mt/recovery/fstab.f6mt
 TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
 BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_15x24.h\"
 ENABLE_LOKI_RECOVERY := true
