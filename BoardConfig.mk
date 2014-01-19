@@ -1,7 +1,7 @@
 USE_CAMERA_STUB := true
 
 # Flags
-TARGET_GLOBAL_CFLAGS += -mfpu=neon -mfloat-abi=softfp
+TARGET_GLOBAL_CFLAGS += -mfpu=neon -mfloat-abi=softfp -DQCOM_NO_SECURE_PLAYBACK -DQCOM_ROTATOR_KERNEL_FORMATS -DQCOM_HARDWARE 
 TARGET_GLOBAL_CPPFLAGS += -mfpu=neon -mfloat-abi=softfp
 
 # inherit from the proprietary version
@@ -17,18 +17,22 @@ TARGET_CPU_SMP := true
 TARGET_ARCH_VARIANT := armv7-a-neon
 ARCH_ARM_HAVE_TLS_REGISTER := true
 
+TARGET_QCOM_DISPLAY_VARIANT := caf
+BOARD_EGL_NEEDS_LEGACY_FB := true
+
 TARGET_BOOTLOADER_NAME := f6
 
 TARGET_PRODUCT := f6
 
 BOARD_KERNEL_CMDLINE := androidboot.hardware=f6mt user_debug=31 vmalloc=308M
-BOARD_KERNEL_BASE := 0x80208000
+BOARD_KERNEL_BASE := 0x80200000
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x02000000
 
 TARGET_PREBUILT_KERNEL := device/lge/f6mt/kernel
+LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
 
-TARGET_KERNEL_CONFIG := f6mt_mpcs_defconfig
+TARGET_KERNEL_CONFIG := f6_mpcs_tmo_defconfig
 TARGET_KERNEL_SOURCE := kernel/lge/fx3
 
 # Linaro Optimization
@@ -44,6 +48,43 @@ TARGET_KRAIT_BIONIC_PLDTHRESH := 10
 TARGET_KRAIT_BIONIC_BBTHRESH := 64
 TARGET_KRAIT_BIONIC_PLDSIZE := 64
 
+BOARD_USES_QCOM_HARDWARE := true
+
+# Graphics
+USE_OPENGL_RENDERER := true
+#TARGET_NO_HW_VSYNC := true
+TARGET_USES_C2D_COMPOSITION := true
+TARGET_USES_ION := true
+BOARD_EGL_CFG := device/lge/f6mt/prebuilt/lib/egl/egl.cfg
+
+#QCOM hardware
+BOARD_USES_QCOM_HARDWARE := true
+TARGET_QCOM_DISPLAY_VARIANT := caf
+TARGET_QCOM_MEDIA_VARIANT := caf
+TARGET_DISPLAY_USE_RETIRE_FENCE := true
+
+# PMEM compatibility
+BOARD_NEEDS_MEMORYHEAPPMEM := true
+
+# Wifi
+WPA_SUPPLICANT_VERSION           := VER_0_8_X
+BOARD_WPA_SUPPLICANT_DRIVER		 := NL80211
+BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_bcmdhd
+BOARD_HOSTAPD_DRIVER             := NL80211
+BOARD_HOSTAPD_PRIVATE_LIB        := lib_driver_cmd_bcmdhd
+BOARD_WLAN_DEVICE                := bcmdhd
+WIFI_DRIVER_FW_PATH_PARAM        := "/sys/module/bcmdhd/parameters/firmware_path"
+WIFI_DRIVER_FW_PATH_STA          := "/system/etc/firmware/fw_bcmdhd.bin"
+WIFI_DRIVER_FW_PATH_AP           := "/system/etc/firmware/fw_bcmdhd_apsta.bin"
+WIFI_DRIVER_FW_PATH_P2P          := "/system/etc/firmware/fw_bcmdhd_p2p.bin"
+
+# Webkit
+ENABLE_WEBGL := true
+TARGET_FORCE_CPU_UPLOAD := true
+
+# Preload bootanimation
+TARGET_BOOTANIMATION_PRELOAD := true
+
 # Filesystem
 TARGET_USERIMAGES_USE_EXT4 := true
 BOARD_BOOTIMAGE_PARTITION_SIZE := 50331648
@@ -54,10 +95,14 @@ BOARD_FLASH_BLOCK_SIZE := 131072
 BOARD_VOLD_MAX_PARTITIONS := 97
 
 # Recovery
-TARGET_RECOVERY_FSTAB := device/lge/f6mt/recovery/fstab.f6mt
-TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
+RECOVERY_FSTAB_VERSION = 2
+TARGET_RECOVERY_FSTAB := device/lge/f6mt/recovery/fstab.qcom
+BOARD_CUSTOM_GRAPHICS := ../../../device/lge/f6mt/recovery/graphics.c
+TARGET_RECOVERY_UI_LIB := librecovery_ui_f6
+TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
 BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_15x24.h\"
 ENABLE_LOKI_RECOVERY := true
 BOARD_HAS_NO_SELECT_BUTTON := true
 BOARD_RECOVERY_SWIPE := true
+
 

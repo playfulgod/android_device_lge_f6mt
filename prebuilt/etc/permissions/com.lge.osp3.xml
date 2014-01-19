@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<permissions>
+    <permission name="android.permission.LGE_ACCESS_OSP" >
+        <group gid="system" />
+        <group gid="graphics" />
+        <group gid="bluetooth" />
+        <group gid="radio" />
+        <group gid="audio" />
+	<group gid="qcom_diag" />
+        <group gid="net_bt_stack" />
+    </permission>
+</permissions>
+

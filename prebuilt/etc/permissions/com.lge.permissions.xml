@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<permissions>
+
+    <!-- For SDCard Encryption -->
+    <permission name="com.lge.permission.SDENCRYPTION">
+        <group gid="mount" />
+    </permission>
+
+    <!-- For LGSystemServer -->
+    <library name="com.lge.systemservice.core"
+		file="/system/framework/com.lge.systemservice.core.jar"/>
+</permissions>

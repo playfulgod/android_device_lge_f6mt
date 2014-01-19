@@ -10,6 +10,10 @@ $(call inherit-product, vendor/cm/config/common_full_phone.mk)
 # Inherit device configuration
 $(call inherit-product, device/lge/f6mt/device_f6mt.mk)
 
+# Boot animation
+TARGET_SCREEN_HEIGHT := 1280
+TARGET_SCREEN_WIDTH := 768
+
 ## Device identifier. This must come after all inclusions
 PRODUCT_DEVICE := f6mt
 PRODUCT_NAME := cm_f6mt

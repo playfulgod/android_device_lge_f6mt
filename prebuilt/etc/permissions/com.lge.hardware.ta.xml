@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Feature for devices with ta -->
+<permissions>
+    <feature name="com.lge.hardware.ta" />
+</permissions>
