@@ -1,11 +1,9 @@
-USE_CAMERA_STUB := true
-
-# Flags
-TARGET_GLOBAL_CFLAGS += -mfpu=neon -mfloat-abi=softfp -DQCOM_NO_SECURE_PLAYBACK -DQCOM_ROTATOR_KERNEL_FORMATS -DQCOM_HARDWARE 
-TARGET_GLOBAL_CPPFLAGS += -mfpu=neon -mfloat-abi=softfp
-
 # inherit from the proprietary version
 -include vendor/lge/f6mt/BoardConfigVendor.mk
+
+# Include path
+# LGE will hopefully get a newer kernel out one day, but till then to get msm video and audio going we need this
+TARGET_SPECIFIC_HEADER_PATH := device/lge/f6mt/include
 
 TARGET_ARCH := arm
 TARGET_NO_BOOTLOADER := true
@@ -17,28 +15,24 @@ TARGET_CPU_SMP := true
 TARGET_ARCH_VARIANT := armv7-a-neon
 ARCH_ARM_HAVE_TLS_REGISTER := true
 
-TARGET_QCOM_DISPLAY_VARIANT := caf
-BOARD_EGL_NEEDS_LEGACY_FB := true
+# NFC
+BOARD_HAVE_NFC := true
+BOARD_NFC_HAL_SUFFIX := msm8960
 
 TARGET_BOOTLOADER_NAME := f6
 
 TARGET_PRODUCT := f6
 
-BOARD_KERNEL_CMDLINE := androidboot.hardware=f6mt user_debug=31 vmalloc=308M
+#selinux permissive to try to get twrp booting
+BOARD_KERNEL_CMDLINE := androidboot.hardware=f6mt user_debug=31 vmalloc=308M selinux=permissive
 BOARD_KERNEL_BASE := 0x80200000
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x02000000
 
-TARGET_PREBUILT_KERNEL := device/lge/f6mt/kernel
-LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
+#TARGET_PREBUILT_KERNEL := device/lge/f6mt/kernel
+#LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
 
 TARGET_KERNEL_CONFIG := f6_mpcs_tmo_defconfig
-TARGET_KERNEL_SOURCE := kernel/lge/fx3
-
-# Linaro Optimization
-TARGET_USE_O3 := true
-TARGET_USE_GRAPHITE := true
-TARGET_USE_LINARO_STRING_ROUTINES := true
 
 # Krait optimizations
 TARGET_USE_KRAIT_BIONIC_OPTIMIZATION := true
@@ -48,42 +42,22 @@ TARGET_KRAIT_BIONIC_PLDTHRESH := 10
 TARGET_KRAIT_BIONIC_BBTHRESH := 64
 TARGET_KRAIT_BIONIC_PLDSIZE := 64
 
-BOARD_USES_QCOM_HARDWARE := true
 
-# Graphics
-USE_OPENGL_RENDERER := true
-#TARGET_NO_HW_VSYNC := true
-TARGET_USES_C2D_COMPOSITION := true
-TARGET_USES_ION := true
-BOARD_EGL_CFG := device/lge/f6mt/prebuilt/lib/egl/egl.cfg
-
-#QCOM hardware
+# QCOM
 BOARD_USES_QCOM_HARDWARE := true
-TARGET_QCOM_DISPLAY_VARIANT := caf
+TARGET_USES_QCOM_BSP := true
+COMMON_GLOBAL_CFLAGS += -DQCOM_HARDWARE -DQCOM_BSP
+
+# QCOM enhanced A/V
+TARGET_ENABLE_QC_AV_ENHANCEMENTS := true
+
+# Use CAF media driver variant for 8960
 TARGET_QCOM_MEDIA_VARIANT := caf
+
+# Use retire fence from MDP driver
 TARGET_DISPLAY_USE_RETIRE_FENCE := true
 
-# PMEM compatibility
-BOARD_NEEDS_MEMORYHEAPPMEM := true
-
-# Wifi
-WPA_SUPPLICANT_VERSION           := VER_0_8_X
-BOARD_WPA_SUPPLICANT_DRIVER		 := NL80211
-BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_bcmdhd
-BOARD_HOSTAPD_DRIVER             := NL80211
-BOARD_HOSTAPD_PRIVATE_LIB        := lib_driver_cmd_bcmdhd
-BOARD_WLAN_DEVICE                := bcmdhd
-WIFI_DRIVER_FW_PATH_PARAM        := "/sys/module/bcmdhd/parameters/firmware_path"
-WIFI_DRIVER_FW_PATH_STA          := "/system/etc/firmware/fw_bcmdhd.bin"
-WIFI_DRIVER_FW_PATH_AP           := "/system/etc/firmware/fw_bcmdhd_apsta.bin"
-WIFI_DRIVER_FW_PATH_P2P          := "/system/etc/firmware/fw_bcmdhd_p2p.bin"
-
-# Webkit
-ENABLE_WEBGL := true
-TARGET_FORCE_CPU_UPLOAD := true
-
-# Preload bootanimation
-TARGET_BOOTANIMATION_PRELOAD := true
+BOARD_EGL_CFG := device/lge/f6mt/prebuilt/lib/egl/egl.cfg
 
 # Filesystem
 TARGET_USERIMAGES_USE_EXT4 := true
@@ -97,12 +71,34 @@ BOARD_VOLD_MAX_PARTITIONS := 97
 # Recovery
 RECOVERY_FSTAB_VERSION = 2
 TARGET_RECOVERY_FSTAB := device/lge/f6mt/recovery/fstab.qcom
-BOARD_CUSTOM_GRAPHICS := ../../../device/lge/f6mt/recovery/graphics.c
-TARGET_RECOVERY_UI_LIB := librecovery_ui_f6
 TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
 BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_15x24.h\"
 ENABLE_LOKI_RECOVERY := true
 BOARD_HAS_NO_SELECT_BUTTON := true
-BOARD_RECOVERY_SWIPE := true
+BOARD_RECOVERY_SWIPE := false
+BOARD_USES_MMCUTILS := true
+BOARD_HAS_LARGE_FILESYSTEM := true
+AM_CONNOR := true
+#BOARD_HAS_NO_MISC_PARTITION := true
+TARGET_RECOVERY_LCD_BACKLIGHT_PATH := \"/sys/devices/platform/msm_fb.525569/leds/lcd-backlight/brightness\"
+
+# TWRP is not working yet
+DEVICE_RESOLUTION := 540x960
+RECOVERY_SDCARD_ON_DATA := true
+TW_INTERNAL_STORAGE_PATH := "/data/media"
+TW_INTERNAL_STORAGE_MOUNT_POINT := "data"
+TW_EXTERNAL_STORAGE_PATH := "/sdcard"
+TW_EXTERNAL_STORAGE_MOUNT_POINT := "sdcard"
+
+TW_BRIGHTNESS_PATH := "/sys/devices/platform/msm_fb.525569/leds/lcd-backlight/brightness"
+
+TW_NO_REBOOT_BOOTLOADER := true 
+TW_NO_USB_STORAGE := true
+TW_DEFAULT_EXTERNAL_STORAGE := true
+
+
+
+
+
 
 

@@ -5,4 +5,4 @@
 
 # Zero out boot recovery and wipe data command
 dd if=/dev/zero of=/dev/block/platform/msm_sdcc.1/by-name/misc seek=64 count=20 bs=1
-
+ln -s /data/media /sdcard

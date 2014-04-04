@@ -63,7 +63,7 @@ on fs
 	# LGE_UPDATE_START
     # Executing tune2fs to reserve some region in /data. (80MB)
     # 2012-02-02 G1-FS@lge.com
-    exec /system/bin/tune2fs -u system -r 20480 /dev/block/platform/msm_sdcc.1/by-name/userdata
+    #exec /system/bin/tune2fs -u system -r 20480 /dev/block/platform/msm_sdcc.1/by-name/userdata
     # LGE_UPDATE_END
 	
     # Keeping following partitions outside fstab file. As user may not have

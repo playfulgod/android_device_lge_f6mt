@@ -1,4 +1,6 @@
 LOCAL_PATH := device/lge/f6mt
+RAMDISK_DIR := device/lge/f6mt/prebuilt/root
+
 $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 
 # The gps config appropriate for this device
@@ -9,16 +11,24 @@ $(call inherit-product-if-exists, vendor/lge/f6mt/f6mt-vendor.mk)
 DEVICE_PACKAGE_OVERLAYS += device/lge/f6mt/overlay
 
 ifeq ($(TARGET_PREBUILT_KERNEL),)
-	LOCAL_KERNEL := $(LOCAL_PATH)/kernel
+	#LOCAL_KERNEL := $(LOCAL_PATH)/kernel
 else
-	LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
+	#LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
 endif
 
-$(call inherit-product, build/target/product/full.mk)
+PRODUCT_COPY_FILES += \
+   #$(LOCAL_KERNEL):kernel
 
-$(call inherit-product, hardware/qcom/msm8960/msm8960.mk)
+$(call inherit-product, build/target/product/full.mk)
+$(call inherit-product, device/lge/f6mt/nfc.mk)
+
+#$(call inherit-product, hardware/qcom/msm8960/msm8960.mk)
 
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
+
+# Set default USB interface
+PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
+    persist.sys.usb.config=mtp
 
 ### TEMP DIRTY HACK FOR LOGCAT ###
 PRODUCT_COPY_FILES += \
@@ -27,6 +37,25 @@ PRODUCT_COPY_FILES += \
 # Recovery
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/recovery/postrecoveryboot.sh:recovery/root/sbin/postrecoveryboot.sh
+PRODUCT_COPY_FILES += \
+    device/lge/f6mt/twrp.fstab:recovery/root/etc/twrp.fsab
+
+# Ramdisk
+PRODUCT_COPY_FILES += \
+    $(RAMDISK_DIR)/bootlogo.f6_res_images-timestamp:root/bootlogo.f6_res_images-timestamp \
+    $(RAMDISK_DIR)/charger:root/charger \
+    $(RAMDISK_DIR)/chargerlogo_res_images-timestamp:root/chargerlogo_res_images-timestamp \
+    $(RAMDISK_DIR)/sbin/bootlogo.f6:root/sbin/bootlogo.f6 \
+    $(RAMDISK_DIR)/sbin/bootlogo_fx3:root/sbin/bootlogo_fx3 \
+    $(RAMDISK_DIR)/sbin/chargerlogo:root/sbin/chargerlogo \
+    $(RAMDISK_DIR)/sbin/e2fsck_static:root/sbin/e2fsck_static \
+    $(RAMDISK_DIR)/sbin/make_ext4fs:root/sbin/make_ext4fs \
+    $(RAMDISK_DIR)/sbin/sreadahead_check:root/sbin/sreadahead_check \
+    $(RAMDISK_DIR)/sbin/treadahead:root/sbin/treadahead \
+    $(RAMDISK_DIR)/sbin/wallpaper:root/sbin/wallpaper \
+    $(RAMDISK_DIR)/sbin/write_recovery:root/sbin/write_recovery
+
+
 
 # loki
 PRODUCT_PACKAGES += \
@@ -35,18 +64,6 @@ PRODUCT_PACKAGES += \
     loki_patch \
     loki_bootloaders \
     unlocked_bootloaders
-        
-# OMX
-PRODUCT_PACKAGES += \
-    libdivxdrmdecrypt \
-    libmm-omxcore \
-    libOmxCore \
-    libOmxVdec \
-    libOmxVenc \
-    libOmxAacEnc \
-    libOmxAmrEnc \
-    libOmxWmaDec \
-    libstagefrighthw
 
 # USB
 PRODUCT_PACKAGES += \
@@ -64,122 +81,47 @@ PRODUCT_PACKAGES += \
     make_ext4fs \
     setup_fs
 
-# Wifi
+#bootimages. THIS SUX
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/prebuilt/etc/wifi/wpa_supplicant.conf:/system/etc/wifi/wpa_supplicant.conf \
-    $(LOCAL_PATH)/prebuilt/etc/wifi/bcmdhd.cal:/system/etc/wifi/bcmdhd.cal
+    $(RAMDISK_DIR)/bootimages/boot_logof6_00001.rle:root/bootimages/boot_logof6_00001.rle \
+    $(RAMDISK_DIR)/bootimages/boot_logof6_00002.rle:root/bootimages/boot_logof6_00002.rle \
+    $(RAMDISK_DIR)/bootimages/boot_logof6_00003.rle:root/bootimages/boot_logof6_00003.rle \
+    $(RAMDISK_DIR)/bootimages/boot_logof6_00004.rle:root/bootimages/boot_logof6_00004.rle \
+    $(RAMDISK_DIR)/bootimages/boot_logof6_00005.rle:root/bootimages/boot_logof6_00005.rle \
+    $(RAMDISK_DIR)/bootimages/boot_logof6_00006.rle:root/bootimages/boot_logof6_00006.rle \
+    $(RAMDISK_DIR)/bootimages/boot_logof6_00007.rle:root/bootimages/boot_logof6_00007.rle \
+    $(RAMDISK_DIR)/bootimages/boot_logof6_00008.rle:root/bootimages/boot_logof6_00008.rle \
+    $(RAMDISK_DIR)/bootimages/boot_logof6_00009.rle:root/bootimages/boot_logof6_00009.rle \
+    $(RAMDISK_DIR)/bootimages/boot_logof6_00010.rle:root/bootimages/boot_logof6_00010.rle \
+    $(RAMDISK_DIR)/bootimages/boot_logof6_00011.rle:root/bootimages/boot_logof6_00011.rle \
+    $(RAMDISK_DIR)/bootimages/boot_logof6_00012.rle:root/bootimages/boot_logof6_00012.rle \
+    $(RAMDISK_DIR)/bootimages/boot_logof6_00013.rle:root/bootimages/boot_logof6_00013.rle \
+    $(RAMDISK_DIR)/bootimages/boot_logof6_00014.rle:root/bootimages/boot_logof6_00014.rle \
+    $(RAMDISK_DIR)/bootimages/boot_logof6_00015.rle:root/bootimages/boot_logof6_00015.rle \
+    $(RAMDISK_DIR)/bootimages/boot_logof6_00016.rle:root/bootimages/boot_logof6_00016.rle \
+    $(RAMDISK_DIR)/bootimages/boot_logof6_00017.rle:root/bootimages/boot_logof6_00017.rle \
+    $(RAMDISK_DIR)/bootimages/boot_logof6_00018.rle:root/bootimages/boot_logof6_00018.rle \
+    $(RAMDISK_DIR)/bootimages/boot_logof6_00019.rle:root/bootimages/boot_logof6_00019.rle \
+    $(RAMDISK_DIR)/bootimages/boot_logof6_00020.rle:root/bootimages/boot_logof6_00020.rle \
+    $(RAMDISK_DIR)/bootimages/boot_logof6_00021.rle:root/bootimages/boot_logof6_00021.rle \
+    $(RAMDISK_DIR)/bootimages/boot_logof6_00022.rle:root/bootimages/boot_logof6_00022.rle \
+    $(RAMDISK_DIR)/bootimages/boot_logof6_00023.rle:root/bootimages/boot_logof6_00023.rle \
+    $(RAMDISK_DIR)/bootimages/boot_logof6_00024.rle:root/bootimages/boot_logof6_00024.rle \
+    $(RAMDISK_DIR)/bootimages/boot_logof6_00025.rle:root/bootimages/boot_logof6_00025.rle \
+    $(RAMDISK_DIR)/bootimages/boot_logof6_00026.rle:root/bootimages/boot_logof6_00026.rle \
+    $(RAMDISK_DIR)/bootimages/boot_logof6_00027.rle:root/bootimages/boot_logof6_00027.rle \
+    $(RAMDISK_DIR)/bootimages/boot_logof6_00028.rle:root/bootimages/boot_logof6_00028.rle \
+    $(RAMDISK_DIR)/bootimages/boot_logof6_00029.rle:root/bootimages/boot_logof6_00029.rle \
+    $(RAMDISK_DIR)/bootimages/boot_logof6_00030.rle:root/bootimages/boot_logof6_00030.rle \
+    $(RAMDISK_DIR)/bootimages/boot_logof6_00031.rle:root/bootimages/boot_logof6_00031.rle \
+    $(RAMDISK_DIR)/bootimages/boot_logof6_00032.rle:root/bootimages/boot_logof6_00032.rle \
+    $(RAMDISK_DIR)/bootimages/boot_logof6_00033.rle:root/bootimages/boot_logof6_00033.rle \
+    $(RAMDISK_DIR)/bootimages/boot_logof6_00034.rle:root/bootimages/boot_logof6_00034.rle \
+    $(RAMDISK_DIR)/bootimages/boot_logof6_00035.rle:root/bootimages/boot_logof6_00035.rle \
+    $(RAMDISK_DIR)/bootimages/boot_logof6_00036.rle:root/bootimages/boot_logof6_00036.rle \
+    $(RAMDISK_DIR)/bootimages/boot_logof6_00037.rle:root/bootimages/boot_logof6_00037.rle \
+    $(RAMDISK_DIR)/bootimages/boot_logof6_00038.rle:root/bootimages/boot_logof6_00038.rle \
+    $(RAMDISK_DIR)/bootimages/boot_logof6_00039.rle:root/bootimages/boot_logof6_00039.rle 
 
-## HostAP
-PRODUCT_PACKAGES += \
-    hostapd
-
-# Audio
-PRODUCT_PACKAGES += \
-    alsa.msm8960 \
-    audio.a2dp.default \
-    audio_policy.msm8960 \
-    audio.primary.msm8960 \
-    libalsa-intf \
-    libaudioutils
-
-# Graphics
-PRODUCT_PACKAGES += \
-    lights.msm8960 \
-    copybit.msm8960 \
-    gralloc.msm8960 \
-    hwcomposer.msm8960 \
-    libgenlock \
-    libmemalloc \
-    liboverlay \
-    libQcomUI \
-    libtilerenderer
-    
-# APN
-PRODUCT_COPY_FILES += \
-	$(LOCAL_PATH)/prebuilt/etc/apns-conf.xml:system/etc/apns-conf.xml
-	
-# GPS config
-PRODUCT_COPY_FILES += device/common/gps/gps.conf_US:system/etc/gps.conf
-
-# Media config
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/prebuilt/etc/media_codecs.xml:system/etc/media_codecs.xml \
-    $(LOCAL_PATH)/prebuilt/etc/media_profiles.xml:system/etc/media_profiles.xml
-    
-# vold config
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/prebuilt/etc/vold.fstab:system/etc/vold.fstab
-
-# thermald config
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/prebuilt/etc/thermald.conf:/system/etc/thermald.conf
-    
-# Sound configs
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/prebuilt/etc/audio_effects.conf:system/etc/audio_effects.conf \
-    $(LOCAL_PATH)/prebuilt/etc/audio_policy.conf:system/etc/audio_policy.conf
-    
-# Torch
-PRODUCT_PACKAGES += \
-    Torch
-
-# Ramdisk
-PRODUCT_COPY_FILES += \
-	$(LOCAL_PATH)/prebuilt/root/init.f6mt.rc:root/init.f6mt.rc \
-        $(LOCAL_PATH)/prebuilt/root/init.fx3.rc:root/init.fx3.rc \
-        $(LOCAL_PATH)/prebuilt/root/init.lge.cmm.usb.sh:root/init.lge.cmm.usb.sh \
-        $(LOCAL_PATH)/prebuilt/root/init.lge.early.rc:root/init.lge.early.rc \
-        $(LOCAL_PATH)/prebuilt/root/init.lge.rc:root/init.lge.rc \
-        $(LOCAL_PATH)/prebuilt/root/init.lge.usb.rc:root/init.lge.usb.rc \
-        $(LOCAL_PATH)/prebuilt/root/init.qcom.class_core.sh:root/init.qcom.class_core.sh \
-        $(LOCAL_PATH)/prebuilt/root/init.qcom.class_main.sh:root/init.qcom.class_main.sh \
-        $(LOCAL_PATH)/prebuilt/root/init.qcom.early_boot.sh:root/init.qcom.early_boot.sh 
-PRODUCT_COPY_FILES += \
-        $(LOCAL_PATH)/prebuilt/root/init.qcom.rc:root/init.qcom.rc \
-        $(LOCAL_PATH)/prebuilt/root/init.qcom.sh:root/init.qcom.sh \
-	$(LOCAL_PATH)/prebuilt/root/init.qcom.syspart_fixup.sh:root/init.qcom.syspart_fixup.sh \
-	$(LOCAL_PATH)/prebuilt/root/init.rc:root/init.rc \
-	$(LOCAL_PATH)/prebuilt/root/init.trace.rc:root/init.trace.rc \
-	$(LOCAL_PATH)/prebuilt/root/init.usb.rc:root/init.usb.rc \
-	$(LOCAL_PATH)/prebuilt/root/ueventd.f6mt.rc:root/ueventd.f6mt.rc \
-        $(LOCAL_PATH)/prebuilt/root/ueventd.qcom.rc:root/ueventd.qcom.rc \
-        $(LOCAL_PATH)/prebuilt/root/ueventd.rc:root/ueventd.rc
-        
-# Qualcomm scripts
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/prebuilt/etc/init.qcom.bt.sh:/system/etc/init.qcom.bt.sh \
-    $(LOCAL_PATH)/prebuilt/etc/init.qcom.coex.sh:/system/etc/init.qcom.coex.sh \
-    $(LOCAL_PATH)/prebuilt/etc/init.qcom.fm.sh:/system/etc/init.qcom.fm.sh \
-    $(LOCAL_PATH)/prebuilt/etc/init.qcom.mdm_links.sh:/system/etc/init.qcom.mdm_links.sh \
-    $(LOCAL_PATH)/prebuilt/etc/init.qcom.modem_links.sh:/system/etc/init.qcom.modem_links.sh \
-    $(LOCAL_PATH)/prebuilt/etc/init.qcom.post_boot.sh:/system/etc/init.qcom.post_boot.sh \
-    $(LOCAL_PATH)/prebuilt/etc/init.qcom.sdio.sh:/system/etc/init.qcom.sdio.sh \
-    $(LOCAL_PATH)/prebuilt/etc/init.qcom.audio.sh:/system/etc/init.qcom.audio.sh \
-    $(LOCAL_PATH)/prebuilt/etc/init.qcom.efs.sync.sh:/system/etc/init.qcom.sync.efs.sh \
-    $(LOCAL_PATH)/prebuilt/etc/init.qcom.post_fs.sh:/system/etc/init.qcom.post_fs.sh \
-    $(LOCAL_PATH)/prebuilt/etc/init.qcom.thermald_conf.sh:/system/etc/init.qcom.thermald_conf.sh \
-    $(LOCAL_PATH)/prebuilt/etc/init.qcom.wifi.sh:/system/etc/init.qcom.wifi.sh
-    
-# Input device config
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/prebuilt/usr/idc/melfas-ts.idc:system/usr/idc/melfas-ts.idc \
-    $(LOCAL_PATH)/prebuilt/usr/idc/qwerty.idc:system/usr/idc/qwerty.idc \
-    $(LOCAL_PATH)/prebuilt/usr/idc/qwerty2.idc:system/usr/idc/qwerty2.idc \
-    $(LOCAL_PATH)/prebuilt/usr/idc/osp3-input.idc:system/usr/idc/osp3-input.idc
-
-# Keylayouts and Keychars
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/prebuilt/usr/keylayout/AVRCP.kl:system/usr/keylayout/AVRCP.kl \
-    $(LOCAL_PATH)/prebuilt/usr/keylayout/lge_synaptics_touch.kl:system/usr/keylayout/lge_synaptics_touch.kl \
-    $(LOCAL_PATH)/prebuilt/usr/keylayout/melfas-ts.kl:system/usr/keylayout/melfas-ts.kl \
-    $(LOCAL_PATH)/prebuilt/usr/keylayout/osp3-input.kl:system/usr/keylayout/osp3-input.kl
-    
-# Prebuilt libraries that are needed for DRM playback
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/prebuilt/vendor/lib/drm/libdrmwvmplugin.so:system/vendor/lib/drm/libdrmwvmplugin.so \
-    $(LOCAL_PATH)/prebuilt/vendor/lib/libwvdrm_L1.so:system/vendor/lib/libwvdrm_L1.so \
-    $(LOCAL_PATH)/prebuilt/vendor/lib/libwvm.so:system/vendor/lib/libwvm.so \
-    $(LOCAL_PATH)/prebuilt/vendor/lib/libWVStreamControlAPI_L1.so:system/vendor/lib/libWVStreamControlAPI_L1.so \
-    $(LOCAL_PATH)/prebuilt/etc/permissions/com.google.widevine.software.drm.xml:system/etc/permissions/com.google.widevine.software.drm.xml
 
 

@@ -26,9 +26,9 @@ on property:sys.boot_completed=1
     start post_install
 
 #CAPP_RESERVED_USERDATA
-on property:ro.reserve.blockcount=*
-    exec /system/bin/tune2fs -r $ro.reserve.blockcount \
-              -u system -g system $ro.reserve.userdata
+#on property:ro.reserve.blockcount=*
+#    exec /system/bin/tune2fs -r $ro.reserve.blockcount \
+#              -u system -g system $ro.reserve.userdata
 
 #CAPP_UNINSTALL_PRELOADED
 service post_install /system/vendor/bin/post_install.sh

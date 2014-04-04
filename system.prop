@@ -51,16 +51,8 @@ ro.use_data_netmgrd=true
 # system props for time-services
 persist.timed.enable=true
 
-# System props for audio
-persist.audio.fluence.mode=endfire
-persist.audio.vr.enable=false
-persist.audio.handset.mic=analog
-
 # System prop to select audio resampler quality
 af.resampler.quality=255
-
-# system prop for opengles version
-ro.opengles.version=131072
 
 #system prop for switching gps driver to qmi
 persist.gps.qmienabled=true
@@ -71,9 +63,3 @@ ro.qualcomm.cabl=2
 # System prop for sending transmit power request to RIL during WiFi hotspot on/off
 ro.ril.transmitpower=true
 
-dalvik.vm.heapstartsize=8m
-dalvik.vm.heapgrowthlimit=96m
-dalvik.vm.heapsize=256m
-dalvik.vm.heaptargetutilization=0.75
-dalvik.vm.heapminfree=512k
-dalvik.vm.heapmaxfree=8m
